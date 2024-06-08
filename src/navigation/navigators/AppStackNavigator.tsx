@@ -1,4 +1,4 @@
-import AppHeader from '@app/components/common/AppHeader';
+import AppHeader from '@app/components/shared/AppHeader';
 import HomeScreen from '@app/screens/AppStack/HomeScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {MD3Theme, withTheme} from 'react-native-paper';
