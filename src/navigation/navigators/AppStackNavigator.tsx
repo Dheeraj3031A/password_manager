@@ -22,7 +22,6 @@ function AppStackNavigator({theme}: Props) {
         statusBarStyle: theme.dark ? 'light' : 'dark',
         contentStyle: {
           backgroundColor: theme.colors.surface,
-          paddingHorizontal: 16,
         },
       }}>
       <Stack.Screen
