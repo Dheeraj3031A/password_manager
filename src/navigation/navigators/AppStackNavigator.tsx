@@ -1,9 +1,11 @@
 import AppHeader from '@app/components/shared/AppHeader';
 import HomeScreen from '@app/screens/AppStack/HomeScreen';
+import SplashScreen from '@app/screens/AppStack/SplashScreen';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {MD3Theme, withTheme} from 'react-native-paper';
 
 export type TAppStacknavigationRoutes = {
+  SplashScreen: undefined;
   HomeScreen: undefined;
 };
 
@@ -24,6 +26,11 @@ function AppStackNavigator({theme}: Props) {
           backgroundColor: theme.colors.surface,
         },
       }}>
+      <Stack.Screen
+        name="SplashScreen"
+        component={SplashScreen}
+        options={{headerShown: false}}
+      />
       <Stack.Screen
         name="HomeScreen"
         component={HomeScreen}
