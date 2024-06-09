@@ -1,7 +1,7 @@
 import {Divider, Surface, Text} from 'react-native-paper';
 import {StyleSheet, View} from 'react-native';
 import {ReactNode} from 'react';
-import Animated, {FadeInDown} from 'react-native-reanimated';
+import Animated, {FadeInDown, FadeOut} from 'react-native-reanimated';
 
 type Props = {
   title: string;
@@ -13,7 +13,10 @@ const AnimatedSurface = Animated.createAnimatedComponent(Surface);
 
 function PasswordCard({title, description, actionButtons}: Props) {
   return (
-    <AnimatedSurface entering={FadeInDown} style={styles.surface}>
+    <AnimatedSurface
+      entering={FadeInDown}
+      exiting={FadeOut}
+      style={styles.surface}>
       <View style={styles.textContainer}>
         <Text variant="titleLarge">{title}</Text>
         <Text style={styles.textDescription}>{description}</Text>

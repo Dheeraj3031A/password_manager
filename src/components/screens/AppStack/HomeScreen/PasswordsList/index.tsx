@@ -4,6 +4,7 @@ import CopyPassword from './ActionButtons/CopyPassword';
 import {useSelector} from 'react-redux';
 import {GlobalStoreRootState} from '@app/store/store';
 import EmptyList from '@app/components/shared/EmptyList';
+import DeleteButton from '@app/components/shared/EditorDialog/DeleteButton';
 
 function PasswordsList() {
   const passwords = useSelector(
@@ -23,6 +24,7 @@ function PasswordsList() {
           actionButtons={
             <>
               <CopyPassword password={item.password} />
+              <DeleteButton id={item.id} />
             </>
           }
         />
@@ -33,7 +35,7 @@ function PasswordsList() {
 
 const styles = StyleSheet.create({
   contentStyle: {
-    flex: 1,
+    minHeight: '80%',
     gap: 20,
     paddingTop: 5,
     paddingBottom: 100,

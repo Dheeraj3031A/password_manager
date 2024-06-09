@@ -1,8 +1,8 @@
-import {TPassword} from '@app/types/Password';
+import {TStoredPassword} from '@app/types/Password';
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 
 type TPasswordsSlice = {
-  passwords: TPassword[];
+  passwords: TStoredPassword[];
 };
 
 const initialState: TPasswordsSlice = {
@@ -13,7 +13,7 @@ const passwordsSlice = createSlice({
   name: 'passwords',
   initialState,
   reducers: {
-    setPasswordsGlobalStore(state, action: PayloadAction<TPassword[]>) {
+    setPasswordsGlobalStore(state, action: PayloadAction<TStoredPassword[]>) {
       return {...state, passwords: action.payload};
     },
   },
