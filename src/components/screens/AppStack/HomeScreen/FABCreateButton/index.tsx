@@ -3,6 +3,7 @@ import {StyleSheet} from 'react-native';
 import Animated, {BounceIn} from 'react-native-reanimated';
 import EditorDialog from '@app/components/shared/EditorDialog';
 import {useState} from 'react';
+import SaveButton from './SaveButton';
 
 const AnimatedFAB = Animated.createAnimatedComponent(FAB);
 
@@ -20,7 +21,13 @@ function FABCreateButton() {
         onPress={handlePress}
         entering={BounceIn}
       />
-      <EditorDialog visible={showDialog} setVisbile={setShowDialog} />
+      <EditorDialog
+        visible={showDialog}
+        setVisbile={setShowDialog}
+        SaveButtonComponent={({data, hideDialog}) => (
+          <SaveButton hideDialog={hideDialog} data={data} />
+        )}
+      />
     </>
   );
 }
