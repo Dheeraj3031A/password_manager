@@ -1,22 +1,21 @@
 import PasswordCard from '@app/components/shared/PasswordCard';
 import {FlatList, StyleSheet} from 'react-native';
 import CopyPassword from './ActionButtons/CopyPassword';
-
-const test = [
-  {
-    id: 'd4dfd4',
-    title: 'dhjad',
-    password: 'jadjsad',
-    description: 'jasd',
-  },
-];
+import {useSelector} from 'react-redux';
+import {GlobalStoreRootState} from '@app/store/store';
+import EmptyList from '@app/components/shared/EmptyList';
 
 function PasswordsList() {
+  const passwords = useSelector(
+    (state: GlobalStoreRootState) => state.passwords.passwords,
+  );
+
   return (
     <FlatList
       contentContainerStyle={styles.contentStyle}
-      data={test}
+      data={passwords}
       keyExtractor={(item) => item.id}
+      ListEmptyComponent={EmptyList}
       renderItem={({item}) => (
         <PasswordCard
           title={item.title}
@@ -34,6 +33,7 @@ function PasswordsList() {
 
 const styles = StyleSheet.create({
   contentStyle: {
+    flex: 1,
     gap: 20,
     paddingTop: 5,
     paddingBottom: 100,
