@@ -1,14 +1,12 @@
+import {TSaveButtonComponentProps} from '@app/components/shared/EditorDialog';
 import {setPasswordsGlobalStore} from '@app/store/features/passwordsSlice';
 import {GlobalStoreRootState} from '@app/store/store';
-import {TPassword} from '@app/types/Password';
 import {Button} from 'react-native-paper';
 import {useDispatch, useSelector} from 'react-redux';
 
 type Props = {
   id: string;
-  data: TPassword;
-  hideDialog: () => void;
-};
+} & TSaveButtonComponentProps;
 
 function SaveButton({id, data, hideDialog}: Props) {
   const savedPasswords = useSelector(

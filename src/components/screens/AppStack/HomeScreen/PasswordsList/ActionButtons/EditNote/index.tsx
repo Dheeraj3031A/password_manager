@@ -26,6 +26,7 @@ function EditNote({data}: Props) {
         title={data.title}
         description={data.description}
         password={data.password}
+        // TODO: Fix eslint error
         SaveButtonComponent={({data: editedData, hideDialog}) => (
           <SaveButton id={data.id} data={editedData} hideDialog={hideDialog} />
         )}

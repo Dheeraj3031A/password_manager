@@ -1,14 +1,19 @@
 import InputBox from '@app/components/common/InputBox';
 import {TPassword, TStoredPassword} from '@app/types/Password';
-import {ComponentType, Dispatch, SetStateAction, useState} from 'react';
+import {Dispatch, FC, SetStateAction, useState} from 'react';
 import {Button, Dialog, Portal} from 'react-native-paper';
 import {StyleSheet} from 'react-native';
+
+export type TSaveButtonComponentProps = {
+  hideDialog: () => void;
+  data: TPassword;
+};
 
 type Props = {
   visible: boolean;
   setVisbile: Dispatch<SetStateAction<boolean>>;
   headline?: string;
-  SaveButtonComponent: ComponentType<{hideDialog: () => void; data: TPassword}>;
+  SaveButtonComponent: FC<TSaveButtonComponentProps>;
 } & Partial<TStoredPassword>;
 
 function EditorDialog({

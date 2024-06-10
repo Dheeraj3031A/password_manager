@@ -24,9 +24,7 @@ function FABCreateButton() {
       <EditorDialog
         visible={showDialog}
         setVisbile={setShowDialog}
-        SaveButtonComponent={({data, hideDialog}) => (
-          <SaveButton hideDialog={hideDialog} data={data} />
-        )}
+        SaveButtonComponent={SaveButton}
       />
     </>
   );
