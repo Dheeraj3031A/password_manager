@@ -1,6 +1,8 @@
-import EditorDialog from '@app/components/shared/EditorDialog';
+import EditorDialog, {
+  EditorDialogRef,
+} from '@app/components/shared/EditorDialog';
 import {TStoredPassword} from '@app/types/Password';
-import {useState} from 'react';
+import {useRef, useState} from 'react';
 import {IconButton} from 'react-native-paper';
 import SaveButton from './SaveButton';
 
@@ -9,6 +11,7 @@ type Props = {
 };
 
 function EditNote({data}: Props) {
+  const editorRef = useRef<EditorDialogRef>(null);
   const [showEditor, setShowEditor] = useState(false);
 
   function handleEdit() {
@@ -20,16 +23,14 @@ function EditNote({data}: Props) {
       <IconButton icon={'pencil'} onPress={handleEdit} />
 
       <EditorDialog
+        ref={editorRef}
         headline="Edit Note"
         visible={showEditor}
         setVisbile={setShowEditor}
         title={data.title}
         description={data.description}
         password={data.password}
-        // TODO: Fix eslint error
-        SaveButtonComponent={({data: editedData, hideDialog}) => (
-          <SaveButton id={data.id} data={editedData} hideDialog={hideDialog} />
-        )}
+        SaveButtonComponent={<SaveButton id={data.id} editorRef={editorRef} />}
       />
     </>
   );

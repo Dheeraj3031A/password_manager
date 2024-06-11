@@ -1,77 +1,93 @@
-import InputBox from '@app/components/common/InputBox';
+import InputBox, {InputBoxRef} from '@app/components/common/InputBox';
 import {TPassword, TStoredPassword} from '@app/types/Password';
-import {Dispatch, FC, SetStateAction, useState} from 'react';
+import {
+  Dispatch,
+  ReactNode,
+  Ref,
+  SetStateAction,
+  forwardRef,
+  useImperativeHandle,
+  useRef,
+} from 'react';
 import {Button, Dialog, Portal} from 'react-native-paper';
 import {StyleSheet} from 'react-native';
-
-export type TSaveButtonComponentProps = {
-  hideDialog: () => void;
-  data: TPassword;
-};
 
 type Props = {
   visible: boolean;
   setVisbile: Dispatch<SetStateAction<boolean>>;
   headline?: string;
-  SaveButtonComponent: FC<TSaveButtonComponentProps>;
+  SaveButtonComponent: ReactNode;
 } & Partial<TStoredPassword>;
 
-function EditorDialog({
-  setVisbile,
-  visible,
-  headline = 'Save New Password',
-  SaveButtonComponent,
-  title: defaultTitle,
-  description: defaultDescription,
-  password: defaultPassword,
-}: Props) {
-  const [data, setData] = useState({
-    title: defaultTitle || '',
-    password: defaultPassword || '',
-    description: defaultDescription || '',
-  });
+export type EditorDialogRef = {
+  getValues: () => TPassword;
+  hideDialog: () => void;
+};
 
-  function hideDialog() {
+function EditorDialog(
+  {
+    setVisbile,
+    visible,
+    headline = 'Save New Password',
+    SaveButtonComponent,
+    title: defaultTitle,
+    description: defaultDescription,
+    password: defaultPassword,
+  }: Props,
+  ref: Ref<EditorDialogRef>,
+) {
+  const titleRef = useRef<InputBoxRef>(null);
+  const passwordRef = useRef<InputBoxRef>(null);
+  const descriptionRef = useRef<InputBoxRef>(null);
+
+  useImperativeHandle(ref, () => ({
+    getValues() {
+      return {
+        title: titleRef.current?.getValue()!,
+        description: descriptionRef.current?.getValue()!,
+        password: passwordRef.current?.getValue()!,
+      };
+    },
+    hideDialog() {
+      dismissDialog();
+    },
+  }));
+
+  function dismissDialog() {
     setVisbile(false);
-    if (defaultTitle || defaultTitle || defaultPassword) {
-      setData({
-        title: defaultTitle || '',
-        description: defaultDescription || '',
-        password: defaultPassword || '',
-      });
-      return;
-    }
-    setData({title: '', description: '', password: ''});
+    titleRef.current?.setValue(defaultTitle || '');
+    descriptionRef.current?.setValue(defaultDescription || '');
+    passwordRef.current?.setValue(defaultPassword || '');
   }
 
   return (
     <Portal>
       <Dialog
         visible={visible}
-        onDismiss={hideDialog}
+        onDismiss={dismissDialog}
         dismissable={false}
         dismissableBackButton>
         <Dialog.Title>{headline}</Dialog.Title>
         <Dialog.Content style={styles.content}>
           <InputBox
-            defaultValue={defaultTitle || undefined}
+            ref={titleRef}
+            defaultValue={defaultTitle}
             placeholder="Enter Title"
-            onChangeText={(e) => setData((prev) => ({...prev, title: e}))}
           />
           <InputBox
-            defaultValue={defaultDescription || undefined}
+            ref={descriptionRef}
+            defaultValue={defaultDescription}
             placeholder="Enter Description (Optional)"
-            onChangeText={(e) => setData((prev) => ({...prev, description: e}))}
           />
           <InputBox
-            defaultValue={defaultPassword || undefined}
+            ref={passwordRef}
+            defaultValue={defaultPassword}
             placeholder="Enter Password"
-            onChangeText={(e) => setData((prev) => ({...prev, password: e}))}
           />
         </Dialog.Content>
         <Dialog.Actions>
-          <Button onPress={hideDialog}>Cancel</Button>
-          <SaveButtonComponent data={data} hideDialog={hideDialog} />
+          <Button onPress={dismissDialog}>Cancel</Button>
+          {SaveButtonComponent}
         </Dialog.Actions>
       </Dialog>
     </Portal>
@@ -84,4 +100,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default EditorDialog;
+export default forwardRef(EditorDialog);

@@ -1,13 +1,16 @@
 import {FAB} from 'react-native-paper';
 import {StyleSheet} from 'react-native';
 import Animated, {BounceIn} from 'react-native-reanimated';
-import EditorDialog from '@app/components/shared/EditorDialog';
-import {useState} from 'react';
+import EditorDialog, {
+  EditorDialogRef,
+} from '@app/components/shared/EditorDialog';
+import {useRef, useState} from 'react';
 import SaveButton from './SaveButton';
 
 const AnimatedFAB = Animated.createAnimatedComponent(FAB);
 
 function FABCreateButton() {
+  const editorRef = useRef<EditorDialogRef>(null);
   const [showDialog, setShowDialog] = useState(false);
   function handlePress() {
     setShowDialog((prev) => !prev);
@@ -22,9 +25,10 @@ function FABCreateButton() {
         entering={BounceIn}
       />
       <EditorDialog
+        ref={editorRef}
         visible={showDialog}
         setVisbile={setShowDialog}
-        SaveButtonComponent={SaveButton}
+        SaveButtonComponent={<SaveButton editorRef={editorRef} />}
       />
     </>
   );
