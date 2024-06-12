@@ -15,7 +15,7 @@ export const store = configureStore({
 
 store.subscribe(() => {
   const encrpytedData = CryptoJS.AES.encrypt(
-    JSON.stringify(store.getState()),
+    JSON.stringify(store.getState().passwords.passwords),
     APP_ENCRYPTION_KEY,
   ).toString();
 
