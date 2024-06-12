@@ -18,15 +18,17 @@ function ImportFile({hideMenu}: TItemProps) {
     try {
       ToastAndroid.show('Select Saved File', ToastAndroid.SHORT);
       const res = await RNFS.pickFile();
-      ToastAndroid.show('Importing File...', ToastAndroid.SHORT);
       const fileData = await RNFS.readFile(res[0]);
 
       if (fileData) {
         const decryptedData = decryptPasswordFromAESEncryption(fileData);
-        const filteredArray = removeDuplicatePasswords(
+        const {filteredArray, skipped} = removeDuplicatePasswords(
           currentState,
           decryptedData,
         );
+        if (skipped > 0) {
+          ToastAndroid.show(`Dplicates Skipped ${skipped}`, ToastAndroid.SHORT);
+        }
         dispatch(setPasswordsGlobalStore(filteredArray));
       }
     } catch (e) {

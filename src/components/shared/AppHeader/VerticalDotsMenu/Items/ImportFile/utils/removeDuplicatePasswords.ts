@@ -6,11 +6,13 @@ function removeDuplicatePasswords(
 ) {
   const mergedArray = firstArray.concat(secondArray);
 
+  let skipped = 0;
   let filteredArray: TStoredPassword[] = mergedArray.reduce(
     (acc: TStoredPassword[], current) => {
       const isDuplicate = acc.find((item) => item.id === current.id);
 
       if (isDuplicate) {
+        skipped++;
         return acc;
       } else {
         return [...acc, current];
@@ -19,7 +21,7 @@ function removeDuplicatePasswords(
     [],
   );
 
-  return filteredArray;
+  return {filteredArray, skipped};
 }
 
 export {removeDuplicatePasswords};
