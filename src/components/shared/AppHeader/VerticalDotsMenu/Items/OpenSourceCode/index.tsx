@@ -1,6 +1,6 @@
 import {Menu} from 'react-native-paper';
-import {TItemProps} from '..';
 import {Linking} from 'react-native';
+import {TItemProps} from '../..';
 
 function OpenSourceCode({hideMenu}: TItemProps) {
   function openSourceCodeOnBrowser() {

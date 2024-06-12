@@ -1,5 +1,5 @@
 import {Menu} from 'react-native-paper';
-import {TItemProps} from '..';
+import {TItemProps} from '../..';
 import * as RNFS from '@dr.pogodin/react-native-fs';
 import {ANDROID_APP_FILE_STORE_DIRECTORY_PATH} from '@app/constants/storage';
 import EncryptedStorage from 'react-native-encrypted-storage';

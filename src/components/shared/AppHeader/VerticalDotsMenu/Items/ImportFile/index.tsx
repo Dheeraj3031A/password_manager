@@ -1,12 +1,17 @@
 import {Menu} from 'react-native-paper';
-import {TItemProps} from '..';
 import * as RNFS from '@dr.pogodin/react-native-fs';
 import {ToastAndroid} from 'react-native';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {setPasswordsGlobalStore} from '@app/store/features/passwordsSlice';
 import {decryptPasswordFromAESEncryption} from '@app/utils/crypto';
+import {GlobalStoreRootState} from '@app/store/store';
+import {removeDuplicatePasswords} from './utils/removeDuplicatePasswords';
+import {TItemProps} from '../..';
 
 function ImportFile({hideMenu}: TItemProps) {
+  const currentState = useSelector(
+    (state: GlobalStoreRootState) => state.passwords.passwords,
+  );
   const dispatch = useDispatch();
 
   async function handleImport() {
@@ -18,7 +23,11 @@ function ImportFile({hideMenu}: TItemProps) {
 
       if (fileData) {
         const decryptedData = decryptPasswordFromAESEncryption(fileData);
-        dispatch(setPasswordsGlobalStore(decryptedData));
+        const filteredArray = removeDuplicatePasswords(
+          currentState,
+          decryptedData,
+        );
+        dispatch(setPasswordsGlobalStore(filteredArray));
       }
     } catch (e) {
       ToastAndroid.show('Error While Importing File', ToastAndroid.SHORT);
