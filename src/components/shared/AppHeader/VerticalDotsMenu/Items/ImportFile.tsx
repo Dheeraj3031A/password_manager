@@ -1,12 +1,10 @@
-import 'react-native-get-random-values';
 import {Menu} from 'react-native-paper';
 import {TItemProps} from '..';
 import * as RNFS from '@dr.pogodin/react-native-fs';
 import {ToastAndroid} from 'react-native';
 import {useDispatch} from 'react-redux';
-import {APP_ENCRYPTION_KEY} from '@app/constants/keys';
 import {setPasswordsGlobalStore} from '@app/store/features/passwordsSlice';
-import CryptoJS from 'crypto-js';
+import {decryptPasswordFromAESEncryption} from '@app/utils/crypto';
 
 function ImportFile({hideMenu}: TItemProps) {
   const dispatch = useDispatch();
@@ -19,9 +17,8 @@ function ImportFile({hideMenu}: TItemProps) {
       const fileData = await RNFS.readFile(res[0]);
 
       if (fileData) {
-        const bytes = CryptoJS.AES.decrypt(fileData, APP_ENCRYPTION_KEY);
-        const decryptedData = bytes.toString(CryptoJS.enc.Utf8);
-        dispatch(setPasswordsGlobalStore(JSON.parse(decryptedData)));
+        const decryptedData = decryptPasswordFromAESEncryption(fileData);
+        dispatch(setPasswordsGlobalStore(decryptedData));
       }
     } catch (e) {
       ToastAndroid.show('Error While Importing File', ToastAndroid.SHORT);
