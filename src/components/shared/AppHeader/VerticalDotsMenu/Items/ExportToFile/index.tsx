@@ -30,7 +30,7 @@ function ExportToFile({hideMenu}: TItemProps) {
         );
 
         ToastAndroid.show(
-          `File Saved On: ${ANDROID_APP_FILE_STORE_DIRECTORY_PATH}`,
+          'File Saved On: Documents/PasswordManager',
           ToastAndroid.LONG,
         );
       }
