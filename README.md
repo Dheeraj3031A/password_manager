@@ -13,6 +13,9 @@ Very Simple Material You Android Password Manager is a lightweight application d
   <img src="https://github.com/ronitkrshah/password_manager/assets/118371892/9bc439dc-df45-4738-9916-8386bb90b790" width=20%>
 </div>
 
+## Installation
+Go To [Releases](https://github.com/ronitkrshah/password_manager/releases) and Download latest build.
+
 ## 🛡️ Secure and Stylish Features 📱
 - **Material Design Magic**: Experience a sleek and intuitive interface that's in sync with Google's Material Design 3 principles. It's not just modern; it's a joy to use!
 
@@ -24,7 +27,7 @@ Very Simple Material You Android Password Manager is a lightweight application d
 
 - **Import and Export Data**: Seamlessly manage your passwords! Easily import and export your data, making it convenient to move between devices or back up your valuable information.
 
-___Note: This app doesn't require an internet connection. Internet Permission will be removed in the next release from `AndroidManifest.xml`___
+- **No Internet Connection**: This App doesn't require an Internet Connection
 
 ## Build Guide 🛠️
 
