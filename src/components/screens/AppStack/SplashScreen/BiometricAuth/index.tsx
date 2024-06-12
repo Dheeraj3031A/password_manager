@@ -8,7 +8,7 @@ import EncryptedStorage from 'react-native-encrypted-storage';
 import {LOCAL_SAVED_PASSWORDS_KEY} from '@app/constants/keys';
 import {useDispatch} from 'react-redux';
 import {setPasswordsGlobalStore} from '@app/store/features/passwordsSlice';
-import {TStoredPassword} from '@app/types/Password';
+import {decryptPasswordFromAESEncryption} from '@app/utils/crypto';
 
 type NavigationProp = NativeStackNavigationProp<TAppStacknavigationRoutes>;
 
@@ -28,11 +28,14 @@ function BiometricAuth() {
         'Authentication required to open Password Manager',
       );
       if (resp) {
-        const savedPasswords = await EncryptedStorage.getItem(
+        const encryptedPasswordsHash = await EncryptedStorage.getItem(
           LOCAL_SAVED_PASSWORDS_KEY,
         );
-        if (savedPasswords) {
-          dispatch(setPasswordsGlobalStore(JSON.parse(savedPasswords)));
+        if (encryptedPasswordsHash) {
+          const decryptedData = decryptPasswordFromAESEncryption(
+            encryptedPasswordsHash,
+          );
+          dispatch(setPasswordsGlobalStore(decryptedData));
         }
         navigation.replace('HomeScreen');
       }

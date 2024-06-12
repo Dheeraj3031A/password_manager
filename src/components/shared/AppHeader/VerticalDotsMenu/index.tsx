@@ -1,7 +1,14 @@
 import {useState} from 'react';
 import {Appbar, Menu} from 'react-native-paper';
-import {Linking, StyleSheet} from 'react-native';
+import {StyleSheet} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import OpenSourceCode from './Items/OpenSourceCode';
+import ImportFile from './Items/ImportFile';
+import ExportToFile from './Items/ExportToFile';
+
+export type TItemProps = {
+  hideMenu: () => void;
+};
 
 function VerticalDotsMenu() {
   const [visible, setVisible] = useState(false);
@@ -15,12 +22,6 @@ function VerticalDotsMenu() {
     setVisible(false);
   }
 
-  function openSourceCodeOnBrowser() {
-    const repoLink = 'https://github.com/ronitkrshah/password_manager.git';
-    hideMenu();
-    Linking.openURL(repoLink);
-  }
-
   return (
     <Menu
       visible={visible}
@@ -28,7 +29,9 @@ function VerticalDotsMenu() {
       onDismiss={hideMenu}
       statusBarHeight={top}
       anchor={<Appbar.Action icon={'dots-vertical'} onPress={showMenu} />}>
-      <Menu.Item title={'Source Code'} onPress={openSourceCodeOnBrowser} />
+      <ImportFile hideMenu={hideMenu} />
+      <ExportToFile hideMenu={hideMenu} />
+      <OpenSourceCode hideMenu={hideMenu} />
     </Menu>
   );
 }
