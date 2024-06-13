@@ -27,7 +27,10 @@ function ImportFile({hideMenu}: TItemProps) {
           decryptedData,
         );
         if (skipped > 0) {
-          ToastAndroid.show(`Dplicates Skipped ${skipped}`, ToastAndroid.SHORT);
+          ToastAndroid.show(
+            `Duplicates Skipped ${skipped}`,
+            ToastAndroid.SHORT,
+          );
         }
         dispatch(setPasswordsGlobalStore(filteredArray));
       }
