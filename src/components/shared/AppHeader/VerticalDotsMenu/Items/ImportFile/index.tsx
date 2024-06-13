@@ -35,7 +35,15 @@ function ImportFile({hideMenu}: TItemProps) {
         dispatch(setPasswordsGlobalStore(filteredArray));
       }
     } catch (e) {
-      ToastAndroid.show('Error While Importing File', ToastAndroid.SHORT);
+      if (e instanceof Error) {
+        if (e.message === 'Malformed UTF-8 data') {
+          ToastAndroid.show('Inavalid Encryption Key!', ToastAndroid.SHORT);
+        } else {
+          ToastAndroid.show('Something Went Wrong', ToastAndroid.SHORT);
+        }
+      } else {
+        ToastAndroid.show('Something Went Wrong', ToastAndroid.SHORT);
+      }
     }
 
     hideMenu();
