@@ -1,4 +1,4 @@
-# Very Simple Material You Android Password Manager
+# A Material You Android Password Manager
 
 ## Overview
 Very Simple Material You Android Password Manager is a lightweight application designed to help you securely manage your passwords on your Android device. With a user-friendly interface and minimalistic design, it aims to provide a hassle-free experience for storing and retrieving your sensitive information.
