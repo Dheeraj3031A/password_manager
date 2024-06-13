@@ -33,7 +33,6 @@ function ConfirmationDialog({
   // TODO: Give a Better Function Name :)
   function afterImport() {
     dismissDialog();
-    hideMenu();
     ToastAndroid.show('Importing Finished', ToastAndroid.SHORT);
   }
 
