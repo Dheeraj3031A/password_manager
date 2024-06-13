@@ -75,7 +75,9 @@ function ConfirmationDialog({
           </View>
         </Dialog.Content>
         <Dialog.Actions>
-          <Button onPress={appendData}>Append</Button>
+          <Button disabled={currentState.length < 1} onPress={appendData}>
+            Append
+          </Button>
           <Button onPress={clearExistingPasswords}>Clean</Button>
         </Dialog.Actions>
       </Dialog>
