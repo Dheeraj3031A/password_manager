@@ -33,6 +33,8 @@ function ExportToFile({hideMenu}: TItemProps) {
           'File Saved On: Documents/PasswordManager',
           ToastAndroid.LONG,
         );
+      } else {
+        ToastAndroid.show('No Saved Passwords Available!', ToastAndroid.SHORT);
       }
     } catch (error) {
       ToastAndroid.show('Error exporting data', ToastAndroid.SHORT);
